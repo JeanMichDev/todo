@@ -15,6 +15,7 @@ export const getAllActiveTodos = async (userId?: string) => {
       content: true,
       priority: true,
       deadline: true,
+      canceledAt: true,
     },
   });
 };

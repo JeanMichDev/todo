@@ -59,9 +59,9 @@ export default async function Home() {
           </button>
         </form>
         <section className="flex w-full flex-col items-start justify-center gap-4">
-          {todos.map((todo: Todo) => (
-            <TodoItem key={todo.id} todo={todo} />
-          ))}
+          {todos.map((todo: Todo) =>
+            todo.isDone ? null : <TodoItem key={todo.id} todo={todo} />
+          )}
         </section>
       </section>
     </main>

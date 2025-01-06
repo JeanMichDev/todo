@@ -3,21 +3,25 @@
 import { Button } from "@/components/Button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { Todo } from "../todos.query";
+import { editContent } from "@/action/editContent.action";
+import { TodoView } from "./todo.query";
 
 type EditContentFormProps = {
-  actualContent?: string;
+  todo: TodoView;
 };
 
-export const EditContentForm = ({ actualContent }: EditContentFormProps) => {
+export const EditContentForm = ({ todo }: EditContentFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  console.log(isEditing);
+  console.log(todo.content);
   return (
     <div className="flex h-full flex-[3] flex-col items-start justify-center  gap-4 border border-black">
       {isEditing ? (
-        <form className="flex w-full flex-col gap-2">
+        <form className="flex w-full flex-col gap-2" action={editContent}>
           <label htmlFor="content">
             <h3 className="font-medium">Content</h3>
           </label>
+          <input type="hidden" name="id" value={todo.id} />
           <textarea
             name="content"
             id="content"
@@ -27,7 +31,7 @@ export const EditContentForm = ({ actualContent }: EditContentFormProps) => {
                 "bg-muted": isEditing,
               }
             )}
-            defaultValue={actualContent}
+            defaultValue={todo.content ? todo.content : ""}
           />
           <div className="ml-auto flex flex-row gap-2">
             <Button type="submit" size="md">
@@ -35,7 +39,7 @@ export const EditContentForm = ({ actualContent }: EditContentFormProps) => {
             </Button>
             <Button
               size="md"
-              className="ml-auto"
+              className=""
               onClick={() => setIsEditing(!isEditing)}
             >
               {isEditing ? "Cancel" : "Edit"}
@@ -46,7 +50,7 @@ export const EditContentForm = ({ actualContent }: EditContentFormProps) => {
         <div className="flex w-full flex-col gap-2">
           <h3 className="font-medium">Content</h3>
           <p className="min-h-32 w-full flex-1 rounded-md border bg-muted/70 text-base">
-            {actualContent}
+            {todo.content ? todo.content : "No content"}
           </p>
           <Button
             size="md"
