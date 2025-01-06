@@ -25,11 +25,6 @@ export default async function UniqueTodo({
   const todo = await getTodo(todoId);
   if (!todo) notFound();
 
-  const deadline = todo.deadline
-    ? new Intl.DateTimeFormat("fr-FR").format(new Date(todo.deadline))
-    : "No deadline";
-
-  console.log(todo);
   return (
     <main className="m-auto size-full max-w-3xl border bg-indigo-100">
       <header className="flex flex-col items-center justify-center gap-4 p-5">
@@ -38,7 +33,6 @@ export default async function UniqueTodo({
       </header>
       <section className="flex w-full flex-row items-start justify-center gap-4   border border-black p-5">
         <EditContentForm todo={todo} />
-
         <div className="flex w-full flex-1 flex-col items-end justify-center gap-4 border border-black">
           <h3>Statut</h3>
           <DoneUndoneForm todo={todo} />

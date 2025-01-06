@@ -22,7 +22,7 @@ model Todo {
   id         String    @id @default(cuid())
   title      String
   slug       String    @unique
-  priority   String    @default("medium")
+  priority   String    @default("Medium") // Low, Medium, High , sqlite does not support enum
   content    String?
   isDone     Boolean   @default(false)
   createdAt  DateTime  @default(now())

@@ -14,9 +14,6 @@ type TodoItemProps = {
 };
 
 export const TodoItem = ({ todo, className }: TodoItemProps) => {
-  const deadline = todo.deadline
-    ? new Intl.DateTimeFormat("fr-FR").format(todo.deadline)
-    : "No deadline";
 
   return (
     <div className="flex w-full flex-row items-center justify-items-center gap-4 rounded-md border border-black px-2 py-4 ">

@@ -2,7 +2,6 @@
 
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export const editContent = async (formData: FormData) => {
   try {
@@ -18,4 +17,5 @@ export const editContent = async (formData: FormData) => {
   } catch (e) {
     console.error(e);
   }
+  revalidatePath("/");
 };
