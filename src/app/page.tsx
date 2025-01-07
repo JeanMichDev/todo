@@ -1,21 +1,22 @@
 import { createTodo } from "@/action/action";
 import { InputDiv } from "@/components/InputDiv";
-import prisma from "@/lib/db";
+import prisma from "@/lib/prisma";
 import { TodoItem } from "./TodoItem";
 import { getAllActiveTodos, Todo } from "./todos.query";
+import Header from "@/components/layout/Header";
+import { auth } from "root/auth";
 
 export default async function Home() {
-  const user = await prisma.user.findUnique({
-    where: {
-      email: "zob@gmail.com",
-    },
-  });
+  const session = await auth();
+  const user = session?.user;
+
   const todos = await getAllActiveTodos(user?.id);
 
   console.log(todos);
 
   return (
     <main className="m-auto size-full max-w-3xl border bg-indigo-100">
+      <Header />
       <section className="flex flex-col items-center justify-center gap-4 p-5">
         <h1 className="text-center text-xl font-semibold">Todo List</h1>
         <form

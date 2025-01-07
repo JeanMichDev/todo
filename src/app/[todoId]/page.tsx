@@ -1,12 +1,11 @@
-import { Button } from "@/components/Button";
 import { DoneUndoneForm } from "@/components/doneUndoneForm";
+import { SetDeadlineForm } from "@/components/setDeadlineForm";
 import { SetPriorityForm } from "@/components/setPriorityForm";
-import prisma from "@/lib/db";
+import prisma from "@/lib/prisma";
 import { unstable_cache as cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { EditContentForm } from "./EditContentForm";
 import { getTodo } from "./todo.query";
-import { SetDeadlineForm } from "@/components/setDeadlineForm";
 
 const getCachedTodo = await cache((slug) => {
   return prisma.todo.findUnique({
