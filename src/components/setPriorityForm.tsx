@@ -1,10 +1,11 @@
 "use client";
-import { updateTodo } from "@/action/action";
+import { updatePriority } from "@/action/action";
+import { TodoView } from "@/app/[todoId]/todo.query";
 import { Todo } from "@/app/todos.query";
 import { cn } from "@/lib/utils";
 
 type SetPriorityProps = {
-  todo: Todo;
+  todo: TodoView;
   className?: string;
 };
 
@@ -14,8 +15,7 @@ export const SetPriorityForm = ({ todo, className }: SetPriorityProps) => {
       onChange={(e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        updateTodo(formData);
-        console.log(formData, "updated");
+        updatePriority(formData);
       }}
       className={cn("", className)}
     >

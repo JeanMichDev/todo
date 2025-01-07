@@ -5,6 +5,8 @@ import prisma from "@/lib/db";
 import { unstable_cache as cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { EditContentForm } from "./EditContentForm";
+import { getTodo } from "./todo.query";
+import { SetDeadlineForm } from "@/components/setDeadlineForm";
 
 const getCachedTodo = await cache((slug) => {
   return prisma.todo.findUnique({
@@ -17,15 +19,11 @@ const getCachedTodo = await cache((slug) => {
 export default async function UniqueTodo({
   params,
 }: {
-  params: { slug: string };
+  params: { todoId: string };
 }) {
-  const { slug } = await params;
-  const todo = await getCachedTodo(slug);
+  const { todoId } = await params;
+  const todo = await getTodo(todoId);
   if (!todo) notFound();
-
-  const deadline = todo.deadline
-    ? new Intl.DateTimeFormat("fr-FR").format(new Date(todo.deadline))
-    : "No deadline";
 
   return (
     <main className="m-auto size-full max-w-3xl border bg-indigo-100">
@@ -34,15 +32,14 @@ export default async function UniqueTodo({
         <h2 className="self-start text-lg font-medium">{todo.title}</h2>
       </header>
       <section className="flex w-full flex-row items-start justify-center gap-4   border border-black p-5">
-        <EditContentForm actualContent="flex h-full flex-[3] flex-col items-start justify-center  gap-4 border border-black" />
-
+        <EditContentForm todo={todo} />
         <div className="flex w-full flex-1 flex-col items-end justify-center gap-4 border border-black">
           <h3>Statut</h3>
           <DoneUndoneForm todo={todo} />
           <h3>Priority</h3>
           <SetPriorityForm todo={todo} />
           <h3>Deadline</h3>
-          <p>{deadline}</p>
+          <SetDeadlineForm todo={todo} />
         </div>
       </section>
     </main>

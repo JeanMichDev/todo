@@ -1,10 +1,11 @@
 "use client";
-import { updateTodo } from "@/action/action";
+import { updateIsDoneTodo } from "@/action/action";
+import { TodoView } from "@/app/[todoId]/todo.query";
 import { Todo } from "@/app/todos.query";
 import { cn } from "@/lib/utils";
 
 type DoneUndoneProps = {
-  todo: Todo;
+  todo: TodoView;
   className?: string;
 };
 
@@ -15,8 +16,7 @@ export const DoneUndoneForm = ({ todo, className }: DoneUndoneProps) => {
       onChange={(e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        updateTodo(formData);
-        console.log(formData, "updated");
+        updateIsDoneTodo(formData);
       }}
       className={cn("", className)}
     >
