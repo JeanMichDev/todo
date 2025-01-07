@@ -8,14 +8,6 @@ import { EditContentForm } from "./EditContentForm";
 import { getTodo } from "./todo.query";
 import { SetDeadlineForm } from "@/components/setDeadlineForm";
 
-const getCachedTodo = await cache((slug) => {
-  return prisma.todo.findUnique({
-    where: {
-      slug,
-    },
-  });
-});
-
 export default async function UniqueTodo({
   params,
 }: {
