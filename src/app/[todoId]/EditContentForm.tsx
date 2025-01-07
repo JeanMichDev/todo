@@ -2,6 +2,16 @@
 
 import { editContent } from "@/action/editContent.action";
 import { Button } from "@/components/Button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { TodoView } from "./todo.query";
@@ -34,7 +44,7 @@ export const EditContentForm = ({ todo }: EditContentFormProps) => {
             className="ml-auto disabled:opacity-90"
             onClick={() => setIsEditing(!isEditing)}
           >
-            {isEditing ? "Cancel" : "Edit"}
+            Edit
           </Button>
         </div>
       )}
@@ -55,6 +65,7 @@ const EditingContentForm = ({
   isEditing,
   setIsEditing,
 }: EditingContentFormProps) => {
+  //on focus le textarea au montage du composant
   useEffect(() => {
     if (ref.current) {
       ref.current.focus();
@@ -94,21 +105,32 @@ const EditingContentForm = ({
         <Button type="submit" size="md">
           Save
         </Button>
-        <Button
-          size="md"
-          className=""
-          onClick={(e) => {
-            e.preventDefault(); // Empêche toute action par défaut
-            const userConfirmed = window.confirm(
-              "Are you sure you want to cancel? Unsaved changes will be lost."
-            );
-            if (userConfirmed) {
-              setIsEditing(false);
-            }
-          }}
-        >
-          {isEditing ? "Cancel" : "Edit"}
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button size="md">Cancel</Button>
+          </DialogTrigger>
+          <DialogContent className="w-fit items-center justify-center p-10">
+            <DialogHeader>
+              <DialogTitle>Warning: you will lose your changes</DialogTitle>
+              <DialogDescription>Do you wish to continue ?</DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="w-full sm:justify-between">
+              <DialogClose asChild>
+                <Button size="md">Go back</Button>
+              </DialogClose>
+              <DialogClose asChild>
+                <Button
+                  size="md"
+                  intent="default"
+                  onClick={() => setIsEditing(false)}
+                  className="ml-auto"
+                >
+                  Continue
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </form>
   );

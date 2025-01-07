@@ -14,9 +14,8 @@ type TodoItemProps = {
 };
 
 export const TodoItem = ({ todo, className }: TodoItemProps) => {
-
   return (
-    <div className="flex w-full flex-row items-center justify-items-center gap-4 rounded-md border border-black px-2 py-4 ">
+    <div className="flex w-full flex-row items-center justify-center gap-4 rounded-md border border-black px-2 py-4 ">
       <h2 className="text-lg font-semibold">
         <Link href={`/${todo.id}`}>{todo.title}</Link>
       </h2>
