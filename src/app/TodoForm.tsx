@@ -52,7 +52,7 @@ function TodoForm({ userId }: TodoFormProps) {
         </InputDiv>
       </div>
       <div
-        className="relative size-fit border-4 border-red-700"
+        className="relative size-fit"
         onMouseEnter={() => (!userId ? setIsWarningOpen(true) : null)}
         onMouseLeave={() => setIsWarningOpen(false)}
       >
