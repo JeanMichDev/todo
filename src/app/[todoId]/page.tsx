@@ -1,27 +1,21 @@
 import { DoneUndoneForm } from "@/components/doneUndoneForm";
 import { SetDeadlineForm } from "@/components/setDeadlineForm";
 import { SetPriorityForm } from "@/components/setPriorityForm";
-import prisma from "@/lib/prisma";
-import { unstable_cache as cache } from "next/cache";
+
 import { notFound } from "next/navigation";
 import { EditContentForm } from "./EditContentForm";
 import { getTodo } from "./todo.query";
-
-const getCachedTodo = await cache((slug) => {
-  return prisma.todo.findUnique({
-    where: {
-      slug,
-    },
-  });
-});
+import { getRequiredAuthSession } from "@/lib/authentication";
 
 export default async function UniqueTodo({
   params,
 }: {
   params: { todoId: string };
 }) {
+  const session = await getRequiredAuthSession(); // on s'assure que l'utilisateur est connecté
+
   const { todoId } = await params;
-  const todo = await getTodo(todoId);
+  const todo = await getTodo(todoId, session.user.id);
   if (!todo) notFound();
 
   return (

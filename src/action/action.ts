@@ -3,7 +3,12 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export const createTodo = async (formData: FormData) => {
+export const createTodo = async (formData: FormData, userId?: string) => {
+  if (!userId) {
+    console.error("User not found");
+    return;
+  }
+
   // on vérifie si la date est renseignée pour ne pas avoir undefined et éviter une erreur
   const deadline = formData.get("deadline")
     ? new Date(formData.get("deadline") as string)
@@ -23,7 +28,7 @@ export const createTodo = async (formData: FormData) => {
 
         User: {
           connect: {
-            email: "zob@gmail.com",
+            id: userId,
           },
         },
       },

@@ -1,10 +1,11 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
-export const getTodo = async (todoId: string) => {
+export const getTodo = async (todoId: string, userId: string) => {
   const todo = await prisma.todo.findUnique({
     where: {
       id: todoId,
+      userId,
     },
     select: {
       id: true,

@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
-export const getAllActiveTodos = async (userId?: string) => {
+export const getAllActiveTodos = async (userId = "") => {
   return await prisma.todo.findMany({
     where: {
       userId,
