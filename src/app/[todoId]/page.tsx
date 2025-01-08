@@ -5,7 +5,9 @@ import { SetPriorityForm } from "@/components/setPriorityForm";
 import { notFound } from "next/navigation";
 import { EditContentForm } from "./EditContentForm";
 import { getTodo } from "./todo.query";
+
 import { getRequiredAuthSession } from "@/lib/authentication";
+
 
 export default async function UniqueTodo({
   params,

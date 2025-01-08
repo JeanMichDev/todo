@@ -75,7 +75,18 @@ const EditingContentForm = ({
         ref.current.value.length
       );
     }
-  });
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Nettoyage de l'événement lors du démontage du composant
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <form
